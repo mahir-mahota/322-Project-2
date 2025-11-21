@@ -11,9 +11,13 @@ For C:
 
 1. The minimum shaft diameter is 54.6mm, and the maximum is 66mm - 55mm and 65mm are too close to the bounds
 2. The housing width is 120mm so the bearing out diameter has to be smaller |red|
-3. Without reducing housing thickness, the max bearing width T can be 30mm |green|
+3. Without reducing housing thickness, the max bearing width T must be <30mm and we're contraining to >25mm
 
 For D:
 
 1. 70mm inner diameter is the smallest bearing that leads to an outer diameter of >= 150mm
-2. The diameter of the pinion is 150mm so outer diameter of bearing has to be greater |yellow|
+2. The diameter of the pinion is 150mm so outer diameter of bearing has to be greater |red|
+
+55-75 (55 is too small)
+65-80 (80 has a 170 OD which is cutting it close)
+65-85 (1mm step on shaft on either side)
