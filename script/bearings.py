@@ -20,7 +20,7 @@ count = 0
 
 for index_C, bC in df.iterrows():
     for index_D, bD in df.iterrows():
-        if bC['d'] < left_diameter and bD['d'] < right_diameter:
+        if bC['d'] < left_diameter and bD['d'] < right_diameter and bC['damin'] <= left_diameter and bD['damin'] <= right_diameter:
             CIr = bC['Cr']
             CI0r = bC['C0r']
             CIIr = bD['Cr']
@@ -78,11 +78,13 @@ for index_C, bC in df.iterrows():
                     'OD_I' : bC['D'],
                     'T_I' : bC['T'],
                     'C_I' : bC['C'],
+                    'da_min_I' : bC['damin'],
                     'Bearing_II': bD['Bearing'],
                     'ID_II' : bD['d'],
                     'OD_II' : bD['D'],
                     'T_II' : bD['T'],
                     'C_II' : bD['C'],
+                    'da_min_II' : bD['damin'],
                     'Fr_I' : FrI,
                     'Fr_II' : FrII,
                     'Fa_I' : FaI,
