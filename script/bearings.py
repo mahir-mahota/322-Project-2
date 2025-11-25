@@ -12,33 +12,47 @@ dII = 78
 rP1 = 70
 L10 = 50000
 fs = 20
+f2f = True
 
 # List to store results
 results = []
-count = 0;
+count = 0
 
 for index_C, bC in df.iterrows():
     for index_D, bD in df.iterrows():
         if bC['d'] < left_diameter and bD['d'] < right_diameter:
-            CIr = bC['Cr'];
-            CI0r = bC['C0r'];
-            CIIr = bD['Cr'];
-            CII0r = bD['C0r'];
+            CIr = bC['Cr']
+            CI0r = bC['C0r']
+            CIIr = bD['Cr']
+            CII0r = bD['C0r']
 
-            Cx = ((WrP1 * (dII + bD['a'])) - (WxP1 * rP1)) / (dI + dII + bC['a'] + bD['a']);
-            Cy = (WtP1*(dII + bD['a'])) / (dI + dII + bC['a'] + bD['a'])
-            Dx = ((WrP1 * (dI + bC['a'])) + (WxP1 * rP1)) / (dI + dII + bC['a'] + bD['a']);
-            Dy = (WtP1*(dI + bC['a'])) / (dI + dII + bC['a'] + bD['a'])
+            if f2f == True:
+                lC = dI - bC['a'] + bC['C']
+                lD = dII - bD['a'] + bD['C']
+            else:
+                lC = dI + bC['a']
+                lD = dII + bD['a']
+
+            Cx = ((WrP1*lD)-(WxP1*rP1)) / (lC+lD)
+            Cy = (WtP1*lD) / (lC+lD)
+            Dx = ((WrP1*lC)+(WxP1*rP1)) / (lC+lD)
+            Dy = (WtP1*(lC)) / (lC+lD)
 
             FrI = sqrt(Cx*Cx + Cy*Cy)
             FrII = sqrt(Dx*Dx + Dy*Dy)
 
             FaI = 0
             FaII = 0
-            if ((WxP1 + (0.6 * FrII / bD['Y1'])) >= (0.6 * FrI / bC['Y1'])):
-                FaI = WxP1 + (0.6 * FrII / bD['Y1'])
+            if f2f == True:
+                if ((WxP1 + (0.6 * FrI / bC['Y1'])) >= (0.6 * FrII / bD['Y1'])):
+                    FaII = WxP1 + (0.6 * FrI / bC['Y1'])
+                else:
+                    FaI = (0.6 * FrII / bD['Y1']) - WxP1
             else:
-                FaII = (0.6 * FrI / bC['Y1']) - WxP1
+                if ((WxP1 + (0.6 * FrII / bD['Y1'])) >= (0.6 * FrI / bC['Y1'])):
+                    FaI = WxP1 + (0.6 * FrII / bD['Y1'])
+                else:
+                    FaII = (0.6 * FrI / bC['Y1']) - WxP1
             
             PI = (0.4*FrI + bC['Y1']*FaI) if FaI > 0 else FrI 
             PII = (0.4*FrII + bD['Y1']*FaII) if FaII > 0 else FrII
@@ -63,10 +77,12 @@ for index_C, bC in df.iterrows():
                     'ID_I' : bC['d'],
                     'OD_I' : bC['D'],
                     'T_I' : bC['T'],
+                    'C_I' : bC['C'],
                     'Bearing_II': bD['Bearing'],
                     'ID_II' : bD['d'],
                     'OD_II' : bD['D'],
                     'T_II' : bD['T'],
+                    'C_II' : bD['C'],
                     'Fr_I' : FrI,
                     'Fr_II' : FrII,
                     'Fa_I' : FaI,
