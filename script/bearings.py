@@ -59,9 +59,9 @@ for index_C, bC in df.iterrows():
             
             P0I = 0.5*FrI + bC['Y0']*FaI
             P0II = 0.5*FrII + bD['Y0']*FaII
-            if FrI > (0.5*FrI + bC['Y0']*FaI):
+            if FrI > P0I:
                 P0I = FrI
-            if FrII > (0.5*FrII + bD['Y0']*FaII):
+            if FrII > P0II:
                 P0II = FrII
 
             CIreq = PI * (L10 ** (3/10))
